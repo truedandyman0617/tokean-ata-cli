@@ -1,0 +1,10 @@
+node_modules
+config.js
+package-lock.json
+yarn.lock
+.env
+nohup.out
+*.key
+*.crt
+*.ca
+*.pem

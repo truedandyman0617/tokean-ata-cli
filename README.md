@@ -1,2 +1,8 @@
-# tokean-ata-cli
-Creating token ATA by address list
+## create ata 
+```bash
+ts-node src/cli create-ata \
+    -k ~/.config/solana/id.json \
+    -r custom-rpc-url \
+    -c csv-file-path \
+    -t token-mint-address
+```
