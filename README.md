@@ -1,4 +1,10 @@
 ## create ata 
+### Install
+```bash
+yarn
+```
+
+### CLI
 ```bash
 ts-node src/cli create-ata \
     -k ~/.config/solana/id.json \
