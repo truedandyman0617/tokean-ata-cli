@@ -6,3 +6,5 @@ ts-node src/cli create-ata \
     -c csv-file-path \
     -t token-mint-address
 ```
+
+![CSV template example](./blob/example.csv)
