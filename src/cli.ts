@@ -1,6 +1,6 @@
 import { program } from "commander";
 import log, { LogLevelDesc } from "loglevel";
-import { PublicKey, Connection, Transaction } from "@solana/web3.js";
+import { PublicKey, Connection, Transaction, Keypair } from "@solana/web3.js";
 import { ASSOCIATED_TOKEN_PROGRAM_ID, Token, TOKEN_PROGRAM_ID } from "@solana/spl-token";
 import { loadWalletKey } from "./helpers/accounts";
 import { parse } from 'csv-parse';
@@ -13,9 +13,10 @@ log.setLevel("info");
 
 // --------------------------------------------------------------------------------
 
-programCommand("create-ata")
+programCommand("create-ata", {requireWallet: false})
   .requiredOption('-c, --csv-path <string>', 'CSV file path')
   .requiredOption('-t, --token-mint <string>', 'Token mint address')
+  .option('-k, --keypair <path>', `Solana wallet location`,)
   .option('-s, --only-show <string>', 'Only show ATA - (0/1)')
   .description("Create ATA")
   .action(async (directory, cmd) => {
@@ -27,7 +28,17 @@ programCommand("create-ata")
       onlyShow
     } = cmd.opts();
 
-    const walletKeypairLoaded = loadWalletKey(keypair);
+    let walletKeypairLoaded = Keypair.generate();
+    if(!onlyShow || onlyShow === '0'){
+      if(!keypair)
+      {
+        console.log('Keypair not found.');
+        process.exit(0);
+      }
+      walletKeypairLoaded = loadWalletKey(keypair);
+    }
+      
+
     const tokenMintAddress = new PublicKey(tokenMint);
 
     const csvFilePath = path.resolve(__dirname, csvPath);
