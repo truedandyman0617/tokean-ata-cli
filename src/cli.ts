@@ -16,13 +16,15 @@ log.setLevel("info");
 programCommand("create-ata")
   .requiredOption('-c, --csv-path <string>', 'CSV file path')
   .requiredOption('-t, --token-mint <string>', 'Token mint address')
+  .option('-s, --only-show <string>', 'Only show ATA - (0/1)')
   .description("Create ATA")
   .action(async (directory, cmd) => {
     const {
       keypair,
       rpc,
       csvPath,
-      tokenMint
+      tokenMint,
+      onlyShow
     } = cmd.opts();
 
     const walletKeypairLoaded = loadWalletKey(keypair);
@@ -71,7 +73,7 @@ programCommand("create-ata")
               let _ata_info = await connection.getAccountInfo(userTokenAta);
               const signers = [];
 
-              if (!_ata_info) {
+              if (!_ata_info && (!onlyShow || onlyShow === '0')) {
                 const tx = new Transaction();
                 tx.add(Token.createAssociatedTokenAccountInstruction(
                   ASSOCIATED_TOKEN_PROGRAM_ID,
