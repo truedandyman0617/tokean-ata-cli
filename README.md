@@ -13,6 +13,7 @@ ts-node src/cli create-ata \
     -s 1 \
     -t token-mint-address
 ```
--s OnlyShow ATA, It is not required option. If you want to check ATA only you should set this param to 1
+-s OnlyShow ATA, It is not required option. If you want to check ATA only you should set this param to 1.
+No need to use -k param if you want to use -s 1 param.
 ### CSV
 [CSV template example](./blob/example.csv)
